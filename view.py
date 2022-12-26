@@ -4,7 +4,6 @@ from app import app
 
 
 @app.route("/")
-@app.route("/blog")
 def index():
     return render_template("index.html")
 
