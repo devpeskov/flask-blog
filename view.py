@@ -6,10 +6,10 @@ from app import app
 @app.route("/")
 @app.route("/blog")
 def index():
-    return "<h1>Hello world!</h1>"
+    return render_template("index.html")
 
 
 @app.route("/about")
 def about():
-    name = "Garrison Bergeron"
+    name = "Peskov Sergey"
     return render_template("about.html", name=name)

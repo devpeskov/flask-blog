@@ -1,11 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title></title>
-</head>
-<body>
-  <h2>Web-developer: Peskov Sergey</h2>
-  <h2>Web-developer: {{ name }}</h2>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}
+  About
+{% endblock %}
+
+{% block content_title %}
+  About developer
+{% endblock %}
+
+{% block content %}
+  <p>Name: {{ name }}</p>
+  <p>Skills: Python, OOP, django, HTML & CSS, MongoDB, Redis, NoSQL, Git, Linux, Aiogram</p>
+{% endblock %}
