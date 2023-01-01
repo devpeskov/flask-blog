@@ -7,6 +7,6 @@ RUN pip install poetry
 COPY . /code/
 
 RUN poetry config virtualenvs.create false \
-  && poetry install
+  && poetry install --only main
 
 CMD ["python", "main.py"]
