@@ -4,7 +4,6 @@ version = "0.1.0"
 description = ""
 authors = ["Peskov Sergey <devpeskov@proton.me>"]
 readme = "README.md"
-packages = [{include = "flask_blog"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"

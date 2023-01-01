@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  backend:
+    container_name: 'blog_back'
+    build: ./backend/
+    restart: always
+    volumes:
+      - ./backend:/code
+    ports:
+      - 5000:5000
