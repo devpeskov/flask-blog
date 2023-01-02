@@ -11,5 +11,11 @@
 {% block content %}
   <div>
     <p>{{ post.body }}</p>
+
+    {% for tag in tags %}
+    <a class="btn btn-outline-secondary btn-sm" href=" {{ url_for('posts.tag_detail', slug=tag.slug) }} " role="button">
+      #{{ tag.name }}
+    </a>
+    {% endfor %}
   </div>
 {% endblock %}

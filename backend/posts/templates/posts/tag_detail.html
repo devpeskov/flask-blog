@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Tag-{{ tag.name }}
+{% endblock %}
+
+{% block content_title %}
+  Posts that contain the tag: <span class="badge bg-secondary">#{{ tag.name }}:</span>
+{% endblock %}
+
+{% block content %}
+    {% for post in posts %}
+      <div>
+        <hr/>
+        <a href=" {{ url_for('posts.post_detail', slug=post.slug) }} ">
+          <h4>{{ post.title }}</h4>
+        </a>
+        <p>{{ post.body }}</p>
+      </div>
+    {% endfor %}
+{% endblock %}

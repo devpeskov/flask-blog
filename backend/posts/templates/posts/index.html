@@ -11,6 +11,7 @@
 {% block content %}
   {% for post in posts %}
     <div>
+      <hr/>
       <a href=" {{ url_for('posts.post_detail', slug=post.slug) }} ">
         <h4>{{ post.title }}</h4>
       </a>
