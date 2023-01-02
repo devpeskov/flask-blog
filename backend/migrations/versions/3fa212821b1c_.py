@@ -1,4 +1,4 @@
-"""empty message
+"""Implemented a many-to-many relationship between posts and tags
 
 Revision ID: 3fa212821b1c
 Revises: 21e467f8bdf6
