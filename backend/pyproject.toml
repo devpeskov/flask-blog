@@ -11,6 +11,7 @@ flask = "^2.2.2"
 flask-sqlalchemy = "^3.0.2"
 psycopg2 = "^2.9.5"
 flask-migrate = "^4.0.0"
+wtforms = "^3.0.1"
 
 
 [tool.poetry.group.dev.dependencies]

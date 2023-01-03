@@ -1,9 +1,30 @@
 from flask import Blueprint  # type: ignore
-from flask import render_template, request
+from flask import redirect, render_template, request, url_for
 
+from app import db
 from models import Post, Tag
 
+from .forms import PostForm
+
 posts = Blueprint("posts", __name__, template_folder="templates")
+
+
+@posts.route("/create", methods=["POST", "GET"])
+def create_post():
+    if request.method == "POST":
+        title = request.form["title"]
+        body = request.form["body"]
+
+        try:
+            post = Post(title=title, body=body)
+            db.session.add(post)
+            db.session.commit()
+        except:
+            print("failed to send a create-query to the database")
+        return redirect(url_for('posts.post_detail', slug=post.slug))
+    else:
+        form = PostForm()
+        return render_template("posts/create_post.html", form=form)
 
 
 @posts.route("/")
@@ -14,7 +35,7 @@ def index():
             Post.title.contains(q) | Post.body.contains(q)
         )
     else:
-        posts = Post.query.all()
+        posts = Post.query.order_by(Post.created.desc())
     return render_template("posts/index.html", posts=posts)
 
 
