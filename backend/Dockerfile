@@ -6,9 +6,13 @@ WORKDIR /code
 
 RUN pip install poetry
 
+RUN apt-get update \
+  && apt-get install -y netcat \
+  && rm -rf /var/lib/apt/lists/*
+
 COPY . /code/
 
 RUN poetry config virtualenvs.create false \
   && poetry install --only main
 
-CMD ["python", "main.py"]
+ENTRYPOINT ["/code/makemigrations.sh"]

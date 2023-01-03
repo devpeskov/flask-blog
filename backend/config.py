@@ -1,5 +1,11 @@
+from os import getenv
+from os.path import dirname, join
+
+from dotenv import load_dotenv  # type: ignore
+
+load_dotenv(join(dirname(__file__), "../.env"))
+
+
 class Configuration(object):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = (
-        "postgresql+psycopg2://postgres:@localhost:5432/flask_blog"
-    )
+    SQLALCHEMY_DATABASE_URI = getenv("SQLALCHEMY_DATABASE_URI")
