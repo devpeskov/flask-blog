@@ -21,7 +21,7 @@ def create_post():
             db.session.commit()
         except:
             print("failed to send a create-query to the database")
-        return redirect(url_for('posts.post_detail', slug=post.slug))
+        return redirect(url_for("posts.post_detail", slug=post.slug))
     else:
         form = PostForm()
         return render_template("posts/create_post.html", form=form)
@@ -30,13 +30,23 @@ def create_post():
 @posts.route("/")
 def index():
     q = request.args.get("q")
+
+    page = request.args.get("page")
+
+    if page and page.isdigit():
+        page = int(page)
+    else:
+        page = 1
+
     if q:
         posts = Post.query.filter(
             Post.title.contains(q) | Post.body.contains(q)
         )
     else:
         posts = Post.query.order_by(Post.created.desc())
-    return render_template("posts/index.html", posts=posts)
+    pages = posts.paginate(page=page, per_page=5)
+
+    return render_template("posts/index.html", pages=pages)
 
 
 @posts.route("/<slug>")
