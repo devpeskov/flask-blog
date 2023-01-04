@@ -15,4 +15,4 @@ COPY . /code/
 RUN poetry config virtualenvs.create false \
   && poetry install --only main
 
-ENTRYPOINT ["/code/makemigrations.sh"]
+ENTRYPOINT ["/code/boot.sh"]
