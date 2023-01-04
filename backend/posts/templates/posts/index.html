@@ -6,7 +6,9 @@
 
 {% block content_title %}
   Autor's blog:
+  {% if current_user.has_role('admin') %}
   <a class="btn btn-primary" href="{{ url_for('posts.create_post') }}">Create new post</a>
+  {% endif %}
 {% endblock %}
 
 {% block content %}

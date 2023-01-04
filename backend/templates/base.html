@@ -16,7 +16,7 @@
   <header class="p-3 mb-3 border-bottom">
     <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+        <a href=" {{ url_for('posts.index') }} " class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
           <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
         </a>
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
@@ -28,6 +28,22 @@
         <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search" method="GET">
           <input type="search" class="form-control" placeholder="Search..." aria-label="Search" name="q" value="{{ request.args.get('q', '') }}">
         </form>
+
+        {% if current_user.is_authenticated %}
+          <div class="text-end">
+            {% if current_user.has_role('admin') %}
+              <a href="/admin" class="nav-link link-secondary">Admin panel</a>
+            {% endif %}
+            <a href="/logout" class="nav-link link-secondary">Sign out</a>
+          </div>
+        {% else %}
+          <div class="text-end">
+            <a href="/login" class="btn btn-outline-primary me-2">Login</a>
+            <a href="#" class="btn btn-primary">Sign-up</a>
+          </div>
+        {% endif %}
+
+
       </div>
     </div>
   </header>
@@ -47,7 +63,8 @@
     </div>
   </div>
 
-<script type="text/javascript" href="/static/bootstrap/js/jquery.js"> </script>
+
+<script type="text/javascript" href="/static/bootstrap/js/bootstrap.bundle.min.js"> </script>
 <script type="text/javascript" href="/static/bootstrap/js/bootstrap.min.js"> </script>
 
 </body>

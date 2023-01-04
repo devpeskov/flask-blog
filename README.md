@@ -10,6 +10,8 @@ echo 'POSTGRES_USER="postgres"
 POSTGRES_PASSWORD="paSsw0rdExam91e"
 POSTGRES_DB="flask_blog"
 FLASK_SECRET_KEY="flask-secure-r&+q;(a!#37goqw,er2/.[aktt2&5e#%hegx-13o((=uz^o"
+SECURITY_PASSWORD_SALT="saltjkl12jht89;sdf"
+SECURITY_PASSWORD_HASH="bcrypt"
 
 SQLALCHEMY_DATABASE_URI="postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}"' > .env
 ```
