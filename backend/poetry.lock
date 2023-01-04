@@ -104,6 +104,25 @@ async = ["asgiref (>=3.2)"]
 dotenv = ["python-dotenv"]
 
 [[package]]
+name = "flask-admin"
+version = "1.6.0"
+description = "Simple and extensible admin interface framework for Flask"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "Flask-Admin-1.6.0.tar.gz", hash = "sha256:424ffc79b7b0dfff051555686ea12e86e48dffacac14beaa319fb4502ac40988"},
+]
+
+[package.dependencies]
+Flask = ">=0.7"
+wtforms = "*"
+
+[package.extras]
+aws = ["boto"]
+azure = ["azure-storage-blob"]
+
+[[package]]
 name = "flask-migrate"
 version = "4.0.0"
 description = "SQLAlchemy database migrations for Flask applications using Alembic."
@@ -613,4 +632,4 @@ email = ["email-validator"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "a150cc730b4dd3b9f904cc788cbfa999ef82a5d3fa64b4dfa1df5fc445d1c5cd"
+content-hash = "81ea124724d2abbf7918717130017c3047fd8bd1a6d4f22190090b9ee47ff9c9"

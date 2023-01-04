@@ -36,7 +36,7 @@ class Post(db.Model):
             self.slug = slugify(self.title)
 
     def __repr__(self):
-        return f"<Post id: {self.id}, title: {self.title}>"
+        return f"<post id: {self.id}, title: {self.title}>"
 
 
 class Tag(db.Model):
@@ -49,4 +49,4 @@ class Tag(db.Model):
         self.slug = slugify(self.name)
 
     def __repr__(self):
-        return f"<Tag id: {self.id}, name: {self.name}>"
+        return self.name
