@@ -9,13 +9,49 @@
 {% endblock %}
 
 {% block content %}
-    {% for post in posts %}
-      <div>
-        <hr/>
-        <a href=" {{ url_for('posts.post_detail', slug=post.slug) }} ">
-          <h4>{{ post.title }}</h4>
-        </a>
-        <p>{{ post.body }}</p>
-      </div>
-    {% endfor %}
+<div class="offset-md-2 col-md-8">
+
+  {% for post in pages.items %}
+    <div>
+      <hr/>
+      <a href=" {{ url_for('posts.post_detail', slug=post.slug) }} ">
+        <h4>{{ post.title }}</h4>
+      </a>
+      <p>{{ post.body }}</p>
+    </div>
+  {% endfor %}
+
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item">
+        <form id="previous_page" method="GET">
+          <input type="hidden" name="page" value="{{ pages.prev_num }}">
+          <button type="submit" class="page-link {% if not pages.has_prev %}disabled{% endif %}">
+            <span aria-hidden="true">&laquo;</span>
+          </button>
+        </form>
+      </li>
+
+      {% for page in pages.iter_pages() %}
+        <li class="page-item">
+          <form id="my_form{{ page }}" method="GET">
+            <input type="hidden" name="page" value="{{ page }}">
+            <button type="submit" class="page-link {% if page == pages.page %}active{% endif %}">{{ page }}</button>
+          </form>
+        </li>
+      {% endfor %}
+
+      <li class="page-item">
+        <form id="previous_page" method="GET">
+          <input type="hidden" name="page" value="{{ pages.next_num }}">
+          <button type="submit" class="page-link {% if not pages.has_next %}disabled{% endif %}">
+            <span aria-hidden="true">&raquo;</span>
+          </button>
+        </form>
+      </li>
+    </ul>
+  </nav>
+
+</div>
+
 {% endblock %}

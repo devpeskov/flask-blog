@@ -80,6 +80,12 @@ def post_detail(slug):
 
 @posts.route("/tag/<slug>")
 def tag_detail(slug):
+    page = request.args.get("page")
+    if page and page.isdigit():
+        page = int(page)
+    else:
+        page = 1
+
     tag = Tag.query.filter(Tag.slug == slug).first_or_404()
-    posts = tag.posts.all()
-    return render_template("posts/tag_detail.html", tag=tag, posts=posts)
+    pages = tag.posts.paginate(page=page, per_page=5)
+    return render_template("posts/tag_detail.html", tag=tag, pages=pages)
