@@ -12,34 +12,40 @@
 {% endblock %}
 
 {% block content %}
+<div class="offset-md-2 col-md-8">
+
   {% for post in pages.items %}
-    <div>
-      <hr/>
-      <a href=" {{ url_for('posts.post_detail', slug=post.slug) }} ">
-        <h4>{{ post.title }}</h4>
-      </a>
-      <p>{{ post.body }}</p>
-    </div>
+  <div>
+    <hr/>
+    <a href=" {{ url_for('posts.post_detail', slug=post.slug) }} ">
+      <h4>{{ post.title }}</h4>
+    </a>
+    <p>{{ post.body }}</p>
+  </div>
   {% endfor %}
 
+<form role="search" method="GET">
   <nav aria-label="Page navigation example">
-  <ul class="pagination">
-    <li class="page-item {% if not pages.has_prev %}disabled{% endif %}">
-      <a class="page-link" href="./?page={{ pages.prev_num }}" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-    {% for page in pages.iter_pages() %}
-      <li class="page-item {% if page == pages.page %}active{% endif %}">
-        <a class="page-link" href="./?page={{ page }}">{{ page }}</a>
+    <ul class="pagination">
+      <li class="page-item {% if not pages.has_prev %}disabled{% endif %}">
+        <a class="page-link" href="{{ url_for_pagination }}{{ pages.prev_num }}" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
       </li>
-    {% endfor %}
-    <li class="page-item {% if not pages.has_next %}disabled{% endif %}">
-      <a class="page-link" href="./?page={{ pages.next_num }}" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  </ul>
-</nav>
+      {% for page in pages.iter_pages() %}
+      <li class="page-item {% if page == pages.page %}active{% endif %}">
+        <a class="page-link" href="{{ url_for_pagination }}{{ page }}">{{ page }}</a>
+      </li>
+      {% endfor %}
+      <li class="page-item {% if not pages.has_next %}disabled{% endif %}">
+        <a class="page-link" href="{{ url_for_pagination }}{{ pages.next_num }}" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</form>
+
+</div>
 
 {% endblock %}

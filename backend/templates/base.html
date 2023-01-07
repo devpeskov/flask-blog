@@ -25,7 +25,7 @@
           <li><a href=" {{ url_for('about') }} " class="nav-link px-2 link-dark">About</a></li>
         </ul>
 
-        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search" method="GET">
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search" method="GET" action="{{ url_for('posts.index') }}">
           <input type="search" class="form-control" placeholder="Search..." aria-label="Search" name="q" value="{{ request.args.get('q', '') }}">
         </form>
 

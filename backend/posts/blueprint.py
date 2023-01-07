@@ -1,6 +1,7 @@
 from flask import Blueprint  # type: ignore
 from flask import redirect, render_template, request, url_for
 from flask_security import login_required  # type: ignore
+from sqlalchemy import func
 
 from app import db
 from models import Post, Tag
@@ -47,7 +48,6 @@ def edit_post(slug):
 @posts.route("/")
 def index():
     q = request.args.get("q")
-
     page = request.args.get("page")
 
     if page and page.isdigit():
@@ -56,14 +56,19 @@ def index():
         page = 1
 
     if q:
+        url_for_pagination = f"./?q={q}&page="
         posts = Post.query.filter(
-            Post.title.contains(q) | Post.body.contains(q)
+            func.lower(Post.title).contains(q.lower())
+            | func.lower(Post.body).contains(q.lower())
         )
     else:
+        url_for_pagination = "./?page="
         posts = Post.query.order_by(Post.created.desc())
     pages = posts.paginate(page=page, per_page=5)
 
-    return render_template("posts/index.html", pages=pages)
+    return render_template(
+        "posts/index.html", pages=pages, url_for_pagination=url_for_pagination
+    )
 
 
 @posts.route("/<slug>")
