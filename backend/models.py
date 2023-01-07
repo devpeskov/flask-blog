@@ -45,7 +45,7 @@ class Post(db.Model):
 
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100))
+    name = db.Column(db.String(100), unique=True)
     slug = db.Column(db.String(100), unique=True)
 
     def __init__(self, *args, **kwargs):
