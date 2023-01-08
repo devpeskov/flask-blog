@@ -38,3 +38,27 @@ def add_post_to_db(post: Post) -> Post:
 def update_post(form: PostForm) -> None:
     form.populate_obj(form)
     db.session.commit()
+
+
+def create_tags(tag_line: str) -> list[Tag]:
+    tags: list[Tag] = []
+    if tag_line:
+        tags_list = tag_line.replace(" ", "").split(",")
+        for tag_name in tags_list:
+            tag = _get_or_create(Tag, name=tag_name[:100])
+            tags.append(tag)
+    return tags
+
+
+def _get_or_create(ObjectModel: db.Model, **kwargs) -> db.Model:
+    object = db.session.query(ObjectModel).filter_by(**kwargs).first()
+    if object:
+        return object
+    else:
+        object = ObjectModel(**kwargs)
+        try:
+            db.session.add(object)
+            db.session.commit()
+            return object
+        except:
+            print("failed to send a create-query to the database")

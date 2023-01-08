@@ -13,11 +13,11 @@
       {% for field in form %}
         <div class="col-md-7">
           {{ field.label(class="control-label") }}
-          {{ field(class="form-control", required=True) }}
+          {{ field(class="form-control") }}
         </div>
       {% endfor %}
       <div class="col-12">
-        <button type="submit" class="btn btn-primary mb-3">Edit post</button>
+        <button type="submit" class="btn btn-primary mb-3">Edit</button>
       </div>
     </form>
 {% endblock %}

@@ -7,6 +7,7 @@ from models import Post
 from .forms import PostForm
 from .services import (
     add_post_to_db,
+    create_tags,
     get_filtered_posts,
     get_specific_post,
     get_specific_tag,
@@ -20,12 +21,11 @@ posts = Blueprint("posts", __name__, template_folder="templates")
 @login_required
 def create_post():
     if request.method == "POST":
-        post = add_post_to_db(
-            Post(
-                title=request.form["title"],
-                body=request.form["body"],
-            )
-        )
+        post = Post(title=request.form["title"], body=request.form["body"])
+        tags = create_tags(request.form["tags"])
+        if tags:
+            post.tags = tags
+        add_post_to_db(post)
         return redirect(url_for("posts.post_detail", slug=post.slug))
     else:
         form = PostForm()
@@ -38,6 +38,9 @@ def edit_post(slug):
     post = get_specific_post(slug)
 
     if request.method == "POST":
+        tags = create_tags(request.form["tags"])
+        if tags:
+            post.tags = tags
         update_post(PostForm(formdata=request.form, obj=post))
         return redirect(url_for("posts.post_detail", slug=post.slug))
     else:
