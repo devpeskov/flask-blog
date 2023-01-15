@@ -9,8 +9,13 @@ from app import db
 
 post_tags = db.Table(
     "post_tags",
-    db.Column("post_id", db.Integer, db.ForeignKey("post.id")),
-    db.Column("tag_id", db.Integer, db.ForeignKey("tag.id")),
+    db.Column(
+        "post_id",
+        db.Integer,
+        db.ForeignKey("post.id", ondelete="CASCADE"),
+        primary_key=True,
+    ),
+    db.Column("tag_id", db.Integer, db.ForeignKey("tag.id"), primary_key=True),
 )
 
 
@@ -58,8 +63,15 @@ class Tag(db.Model):
 
 roles_users = db.Table(
     "roles_users",
-    db.Column("user_id", db.Integer(), db.ForeignKey("user.id")),
-    db.Column("role_id", db.Integer(), db.ForeignKey("role.id")),
+    db.Column(
+        "user_id",
+        db.Integer(),
+        db.ForeignKey("user.id", ondelete="CASCADE"),
+        primary_key=True,
+    ),
+    db.Column(
+        "role_id", db.Integer(), db.ForeignKey("role.id"), primary_key=True
+    ),
 )
 
 
