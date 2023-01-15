@@ -24,7 +24,7 @@
   <nav aria-label="Page navigation example">
     <ul class="pagination">
       <li class="page-item">
-        <form id="previous_page" method="GET">
+        <form method="GET">
           <input type="hidden" name="page" value="{{ pages.prev_num }}">
           <button type="submit" class="page-link {% if not pages.has_prev %}disabled{% endif %}">
             <span aria-hidden="true">&laquo;</span>
@@ -34,7 +34,7 @@
 
       {% for page in pages.iter_pages() %}
         <li class="page-item">
-          <form id="my_form{{ page }}" method="GET">
+          <form method="GET">
             <input type="hidden" name="page" value="{{ page }}">
             <button type="submit" class="page-link {% if page == pages.page %}active{% endif %}">{{ page }}</button>
           </form>
@@ -42,7 +42,7 @@
       {% endfor %}
 
       <li class="page-item">
-        <form id="previous_page" method="GET">
+        <form method="GET">
           <input type="hidden" name="page" value="{{ pages.next_num }}">
           <button type="submit" class="page-link {% if not pages.has_next %}disabled{% endif %}">
             <span aria-hidden="true">&raquo;</span>
