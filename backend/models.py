@@ -11,11 +11,14 @@ post_tags = db.Table(
     "post_tags",
     db.Column(
         "post_id",
-        db.Integer,
         db.ForeignKey("post.id", ondelete="CASCADE"),
         primary_key=True,
     ),
-    db.Column("tag_id", db.Integer, db.ForeignKey("tag.id"), primary_key=True),
+    db.Column(
+        "tag_id",
+        db.ForeignKey("tag.id", ondelete="CASCADE"),
+        primary_key=True,
+    ),
 )
 
 
@@ -65,12 +68,13 @@ roles_users = db.Table(
     "roles_users",
     db.Column(
         "user_id",
-        db.Integer(),
         db.ForeignKey("user.id", ondelete="CASCADE"),
         primary_key=True,
     ),
     db.Column(
-        "role_id", db.Integer(), db.ForeignKey("role.id"), primary_key=True
+        "role_id",
+        db.ForeignKey("role.id", ondelete="CASCADE"),
+        primary_key=True,
     ),
 )
 
