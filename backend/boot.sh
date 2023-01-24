@@ -19,7 +19,7 @@ app.app_context().push()
 is_object_exists = db.session.query(
     db.exists().where(User.email == '$FLASK_ADMIN_EMAIL')
 ).scalar()
-print(f'Is admin exists? -{is_object_exists}')
+print(f'Is admin exists? - {is_object_exists}')
 if not is_object_exists:
     user_datastore.create_user(email='$FLASK_ADMIN_EMAIL', password='$FLASK_ADMIN_PASSWORD')
     user_datastore.create_role(name='admin', description='administrator')
