@@ -33,18 +33,18 @@ def add_post_to_db(post: Post) -> Post:
         print("<failed to send a create-query to the database:>", e)
 
 
-def update_post(form: PostForm) -> None:
-    form.populate_obj(form)
+def update_post(form: PostForm, post: Post) -> None:
+    form.populate_obj(post)
     db.session.commit()
 
 
-def create_tags(tag_line: str) -> list[Tag]:
+def create_tags(raw_tags: list[str]) -> list[Tag]:
     tags: list[Tag] = []
-    if tag_line:
-        tags_list = tag_line.replace(" ", "").split(",")
-        for tag_name in tags_list:
-            tag = _get_or_create(Tag, name=tag_name[:100])
-            tags.append(tag)
+    if raw_tags:
+        for tag_name in raw_tags:
+            if tag_name.replace(" ", ""):
+                tag = _get_or_create(Tag, name=tag_name[:100])
+                tags.append(tag)
     return tags
 
 
@@ -58,5 +58,5 @@ def _get_or_create(ObjectModel: db.Model, **kwargs) -> db.Model:
             db.session.add(object)
             db.session.commit()
             return object
-        except:
-            print("failed to send a create-query to the database")
+        except Exception as e:
+            print("<failed to send a create-query to the database:>", e)
