@@ -19,13 +19,14 @@ post_tags = db.Table(
         db.ForeignKey("tag.id", ondelete="CASCADE"),
         primary_key=True,
     ),
+    db.UniqueConstraint("post_id", "tag_id", name="post_tags_unique_key"),
 )
 
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(140))
-    slug = db.Column(db.String(140), unique=True)
+    title = db.Column(db.String(140), nullable=False)
+    slug = db.Column(db.String(140), nullable=False, unique=True)
     body = db.Column(db.Text)
     created = db.Column(db.DateTime, default=datetime.now)
 
@@ -48,12 +49,12 @@ class Post(db.Model):
 
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), unique=True)
-    slug = db.Column(db.String(100), unique=True)
+    name = db.Column(db.String(100), nullable=False, unique=True)
+    slug = db.Column(db.String(100), nullable=False, unique=True)
 
     def __init__(self, *args, **kwargs):
         super(Tag, self).__init__(*args, **kwargs)
-        self.name = self.name[:100].replace(" ", "").lower()
+        self.name = self.name.replace(" ", "")[:100].lower()
         self.generate_slug()
 
     def generate_slug(self):
@@ -76,12 +77,13 @@ roles_users = db.Table(
         db.ForeignKey("role.id", ondelete="CASCADE"),
         primary_key=True,
     ),
+    db.UniqueConstraint("user_id", "role_id", name="roles_users_unique_key"),
 )
 
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer(), primary_key=True)
-    email = db.Column(db.String(100), unique=True)
+    email = db.Column(db.String(100), nullable=False, unique=True)
     password = db.Column(db.String(255))
     active = db.Column(db.Boolean())
     roles = db.relationship(
@@ -93,7 +95,7 @@ class User(db.Model, UserMixin):
 
 class Role(db.Model, RoleMixin):
     id = db.Column(db.Integer(), primary_key=True)
-    name = db.Column(db.String(100), unique=True)
+    name = db.Column(db.String(100), nullable=False, unique=True)
     description = db.Column(db.String(255))
 
 
