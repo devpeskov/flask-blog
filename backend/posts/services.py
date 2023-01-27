@@ -35,6 +35,7 @@ def add_post_to_db(post: Post) -> Post:
 
 def update_post(form: PostForm, post: Post) -> None:
     form.populate_obj(post)
+    post.generate_slug()
     db.session.commit()
 
 
@@ -43,7 +44,7 @@ def create_tags(raw_tags: list[str]) -> list[Tag]:
     if raw_tags:
         for tag_name in list(set(raw_tags)):
             if tag_name.replace(" ", ""):
-                tag = _get_or_create(Tag, name=tag_name[:100])
+                tag = _get_or_create(Tag, name=tag_name[:100].lower())
                 tags.append(tag)
     return tags
 
