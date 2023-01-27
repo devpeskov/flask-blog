@@ -1,3 +1,4 @@
+import admin
 import view
 from app import app, db
 from posts.blueprint import posts
