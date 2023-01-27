@@ -41,7 +41,7 @@ def update_post(form: PostForm, post: Post) -> None:
 def create_tags(raw_tags: list[str]) -> list[Tag]:
     tags: list[Tag] = []
     if raw_tags:
-        for tag_name in raw_tags:
+        for tag_name in list(set(raw_tags)):
             if tag_name.replace(" ", ""):
                 tag = _get_or_create(Tag, name=tag_name[:100])
                 tags.append(tag)

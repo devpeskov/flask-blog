@@ -24,8 +24,8 @@ def create_post():
         post = Post(
             title=request.form["title"],
             body=request.form["body"],
-            tags=create_tags(request.form.getlist("tags[]")),
         )
+        post.tags = create_tags(request.form.getlist("tags[]"))
         add_post_to_db(post)
         return redirect(url_for("posts.post_detail", slug=post.slug))
     else:
