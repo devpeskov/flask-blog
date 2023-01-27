@@ -41,7 +41,7 @@ class Post(db.Model):
 
     def generate_slug(self):
         if self.title:
-            self.slug = _slugify(Post, self.title.lower()[:70])
+            self.slug = _slugify(Post, self.title[:70].lower())
 
     def __repr__(self):
         return f"<post id: {self.id}, title: {self.title}>"
