@@ -41,11 +41,18 @@ def update_post(form: PostForm, post: Post) -> None:
 
 def create_tags(raw_tags: list[str]) -> list[Tag]:
     tags: list[Tag] = []
-    if raw_tags:
-        for tag_name in list(set(raw_tags)):
-            if tag_name.replace(" ", ""):
-                tag = _get_or_create(Tag, name=tag_name[:100].lower())
-                tags.append(tag)
+    # prepared tags = tags in lower register, without spaces, dublicates
+    prepared_tags = set(
+        [
+            x.replace(" ", "")[:100].lower()
+            for x in raw_tags
+            if x.replace(" ", "")
+        ]
+    )
+    if prepared_tags:
+        for tag_name in prepared_tags:
+            tag = _get_or_create(Tag, name=tag_name)
+            tags.append(tag)
     return tags
 
 
