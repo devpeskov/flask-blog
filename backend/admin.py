@@ -6,8 +6,12 @@ from flask_security import Security, SQLAlchemyUserDatastore, current_user
 from app import app, db
 from models import Post, Role, Tag, User
 
+# --- Flask-Security ---
+user_datastore = SQLAlchemyUserDatastore(db, User, Role)
+security = Security(app, user_datastore)
 
-class AdminMixin:
+
+class SecurityMixin:
     def is_accessible(self):
         return current_user.has_role("admin")
 
@@ -15,42 +19,37 @@ class AdminMixin:
         return redirect(url_for("security.login", next=request.url))
 
 
-class BaseModelView(ModelView):
-    def on_model_change(self, form, model, is_created):
-        model.generate_slug()
-        return super(BaseModelView, self).on_model_change(
-            form, model, is_created
+class SecuredAdminIndexView(SecurityMixin, AdminIndexView):
+    pass
+
+
+class SecuredModelView(SecurityMixin, ModelView):
+    pass
+
+
+class BaseSlugModelView(SecuredModelView):
+    def on_model_change(self, form, model_object, is_created):
+        model_object.generate_slug()
+        return super().on_model_change(
+            form, model_object, is_created
         )
 
 
-class AdminView(AdminMixin, ModelView):
-    pass
-
-
-class HomeAdminView(AdminMixin, AdminIndexView):
-    pass
-
-
-class PostAdminView(AdminMixin, BaseModelView):
+class PostView(BaseSlugModelView):
     form_columns = ["title", "body", "tags"]
 
 
-class TagAdminView(AdminMixin, BaseModelView):
+class TagView(BaseSlugModelView):
     form_columns = ["name", "posts"]
 
 
 admin = Admin(
     app,
     name="FlaskApp",
-    index_view=HomeAdminView(name="Home"),
+    index_view=SecuredAdminIndexView(name="Home"),
     template_mode="bootstrap4",
 )
-
-admin.add_view(PostAdminView(Post, db.session))
-admin.add_view(AdminView(User, db.session))
-admin.add_view(TagAdminView(Tag, db.session))
-admin.add_view(AdminView(Role, db.session))
-
-# --- Flask-Security ---
-user_datastore = SQLAlchemyUserDatastore(db, User, Role)
-security = Security(app, user_datastore)
+admin.add_view(PostView(Post, db.session))
+admin.add_view(SecuredModelView(User, db.session))
+admin.add_view(TagView(Tag, db.session))
+admin.add_view(SecuredModelView(Role, db.session))

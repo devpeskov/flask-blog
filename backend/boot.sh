@@ -12,7 +12,8 @@ echo "PostgreSQL started"
 
 flask db upgrade
 
-python -c "from app import app, db, user_datastore
+python -c "from app import app, db
+from admin import user_datastore
 from models import User, Role
 app.app_context().push()
 

@@ -1,6 +1,6 @@
-from flask import Blueprint  # type: ignore
+from flask import Blueprint
 from flask import redirect, render_template, request, url_for
-from flask_security import login_required  # type: ignore
+from flask_security import login_required
 
 from models import Post
 
